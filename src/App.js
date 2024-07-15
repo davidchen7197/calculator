@@ -22,6 +22,7 @@ const App = () => {
     try {
       //I found out eval is dangerous and the use of a math library is needed but I cannot find a math library compatible with node version 14.
       setResult(eval(input));
+      console.log("abc")
     } catch (error) {
       setResult("Error");
     }
