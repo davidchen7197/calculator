@@ -20,13 +20,41 @@ const App = () => {
 
   const handleCalculate = () => {
     try {
-      //I found out eval is dangerous and the use of a math library is needed but I cannot find a math library compatible with node version 14.
-      setResult(eval(input));
-      console.log("abc")
+      const calculatedResult = calculate(input);
+      setResult(calculate(calculatedResult));
     } catch (error) {
       setResult("Error");
     }
   };
+
+  const calculate = (expression) => {
+    const tokens = expression.split(/([+\-*/])/);
+    let currentNumber = parseFloat(tokens[0]);
+    
+    for (let i = 1; i < tokens.length; i += 2) {
+        const operator = tokens[i];
+        const nextNumber = parseFloat(tokens[i + 1]);
+        
+        switch (operator) {
+            case '+':
+                currentNumber += nextNumber;
+                break;
+            case '-':
+                currentNumber -= nextNumber;
+                break;
+            case '*':
+                currentNumber *= nextNumber;
+                break;
+            case '/':
+                currentNumber /= nextNumber;
+                break;
+            default:
+                throw new Error('Invalid operator');
+        }
+    }
+    
+    return currentNumber.toString();
+};
 
   return (
     <div className="calculator">
